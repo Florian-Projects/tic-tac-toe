@@ -4,6 +4,7 @@
 #TODO change self parameters such that only the necessary information is given to the function instead of all
 #TODO improve Board.check_column() by using transposition check: https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions for more information
 import numpy as np
+
 class Board:
 	board = []
 	
@@ -11,12 +12,12 @@ class Board:
 		if args:
 			print(type(args[0]))
 			if self.is_square(args[0]):
-				self.create_board(self, args[0], 25)
+				self.create_board(args[0])
 				print(self.board)
 			else:
 				board = [[1,2,3],
-					 			[4,5,6],
-					 			[7,8,9]]
+					 	[4,5,6],
+						[7,8,9]]
 					 			
 	def is_square(self, x):
 		print(x)
@@ -27,8 +28,8 @@ class Board:
 		else:
 			return False
 	
-	@staticmethod
-	def create_board(size):
+
+	def create_board(self, size):
 		width, height = np.sqrt(size) #technically 1 variable would be enough to conserve memory space however this makes the code easier to read
 		for i in range(size, height):
 			self.board.append([])
@@ -36,7 +37,7 @@ class Board:
 				self.board[i].append(j)
 			
 	def check_win_condition(self):
-		if self.check_rows(self) or self.check_columns(self) or self.check_diagonals(self): #Why do I have to add selfe as a parameter?
+		if self.check_rows() or self.check_columns() or self.check_diagonals(): #Why do I have to add selfe as a parameter?
 			return True
 		else:
 			return False
@@ -44,14 +45,14 @@ class Board:
 	def check_rows(self):
 		for i in range(len(self.board)):
 			if self.is_list_equal(self.board[i]):
-				return True	
+				return True
 		return False
 	
 	def check_columns(self):
 		column = []
 		for i in range(len(self.board)):
 			for j in range(len(self.board)):
-			 column.append(self.board[j][i])
+				column.append(self.board[j][i])
 			if self.is_list_equal(column):
 				return True
 			column = []
@@ -73,7 +74,7 @@ class Board:
 			
 		return False
 		
-		
+	@staticmethod
 	def is_list_equal(x):
 		"""checks if all elemnts of a 1d Array are the same and returns a boolean"""
 		
@@ -106,14 +107,14 @@ class Game:
 			return "{} Wins".format(self.player1.name)
 		
 		else:
-			return self.turn_player2(self)
+			return self.turn_player2()
 		
 	def turn_player2(self):
 		self.player2.make_move(self.board)
 		if self.board.check_win_condition(self.board):
-			return "{} Wins".format(self.playe2.name)
+			return "{} Wins".format(self.player2.name)
 		else:
-			return self.turn_player1(self)
+			return self.turn_player1()
 		
 	
 class Player:
