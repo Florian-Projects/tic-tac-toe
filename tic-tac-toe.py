@@ -129,13 +129,32 @@ class Player:
 		# 1. chosen field needs to be a number between 1 and len(board.board)**2
 		# 2. Need to check if the chosen field is still available
 		board.print_board()
+		valid = False
+		position = input("{0} choose a Position between 1 and {1}\n".format(self.name, len(board.board)**2))
+		while not valid:
+			try:
+				position = int(position)
+			except ValueError:
+				position = input("The chosen Position needs to be a NUMBER between 1 and {}. Please choose a different Position\n".format(len(board.board)**2))
+				continue
+
+			index = self.get_index_in_board(board.board, position)
+			if index:
+				valid = True
+			else:
+				position = input("The chosen Position has already been taken. Please choose a different Position\n")
+		board.board[index[0]][index[1]] = self.symbol
+
 
 	@staticmethod
 	def get_index_in_board(board, position):
 		"""returns the index of an element in a 2d List. If the element is not found none is returned"""
-		for i, sublist in enumerate(board.board):
+		for i, sublist in enumerate(board):
 			if position in sublist:
-				return i, board.index(position)
+				try:
+					return i, sublist.index(position)
+				except ValueError:
+					return
 
 
 
