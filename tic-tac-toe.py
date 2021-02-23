@@ -10,20 +10,19 @@ import numpy as np
 
 class Board:
 
-	def __init__(self, *args):
-		if args:
-			print(type(args[0]))
-			if self.is_square(args[0]):
-				self.create_board(args[0])
-				print(self.board)
-			else:
-				self.board = [[1, 2, 3],
-							  [4, 5, 6],
-							  [7, 8, 9]]
+	def __init__(self, size=9):
+		self.board = [[1, 2, 3],
+					  [4, 5, 6],
+					  [7, 8, 9]]
+		if self.is_square(size):
+			self.board = self.create_board(size)
+		else:
+			self.board = [[1, 2, 3],
+						[4, 5, 6],
+						[7, 8, 9]]
 
 	@staticmethod
 	def is_square(x):
-		print(x)
 		y = np.sqrt(x)
 		y = int(y)
 		if y * y == x:
@@ -31,13 +30,21 @@ class Board:
 		else:
 			return False
 
+	def print_board(self):
+		for i in self.board:
+			print(str(i).replace(","," "))
+
 	def create_board(self, size):
-		width, height = np.sqrt(
-			size)  # technically 1 variable would be enough to conserve memory space however this makes the code easier to read
-		for i in range(size, height):
-			self.board.append([])
-			for j in range(height, width * i, 1):
-				self.board[i].append(j)
+		board = []
+		width, height = int(np.sqrt(size)), int(np.sqrt(size))
+		index = 1
+		for y in range(height):
+			board.append([])
+			for x in range(width):
+				board[y].append(index)
+
+		return board
+
 
 	def check_win_condition(self):
 		if self.check_rows() or self.check_columns() or self.check_diagonals():
@@ -90,7 +97,6 @@ class Board:
 
 
 class Game:
-	board = 0
 
 	def __init__(self, board, player1, player2):
 		self.board = board
@@ -107,7 +113,7 @@ class Game:
 
 	def turn_player1(self):
 		self.player1.make_move(self.board)
-		if self.board.check_win_condition(self.board):
+		if self.board.check_win_condition():
 			return "{} Wins".format(self.player1.name)
 
 		else:
@@ -115,7 +121,7 @@ class Game:
 
 	def turn_player2(self):
 		self.player2.make_move(self.board)
-		if self.board.check_win_condition(self.board):
+		if self.board.check_win_condition():
 			return "{} Wins".format(self.player2.name)
 		else:
 			return self.turn_player1()
@@ -124,18 +130,25 @@ class Game:
 class Player:
 	def __init__(self, name, symbol):
 		self.name = name
-		self.symbol = self.name
+		self.symbol = symbol
 
 	def make_move(self, board):
-		position = input("{} choose a Position.".format(self.name))
-		index = board.board.index(position)
-		board.board[index[0]][index[1]] = self.symbol
+		board.print_board()
+		position = int(input("{} choose a Position.\n".format(self.name)))
+		for i, sublist in enumerate(board.board):
+			if position in sublist:
+				board.board[i][board.board[i].index(position)] = self.symbol
 
 
+
+
+# x = [[1,2],[3,4]]
+# position = 4
+# for i, sublist in enumerate(x):
+# 	if position in sublist:
+# 		print(str(i) + ", " + str(x[i].index(position)))
 playingfield = Board(25)
-# player1 = Player("Florian", "X")
-# player2 = Player("Kilian", "O")
-
-# game = Game(board, player1, player2)
-
-# game.start_game()
+player1 = Player("Florian", "X")
+player2 = Player("Kilian", "O")
+game = Game(playingfield, player1, player2)
+game.start_game()
