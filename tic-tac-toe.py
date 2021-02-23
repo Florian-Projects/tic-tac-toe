@@ -135,6 +135,9 @@ class Player:
 		while not valid:
 			try:
 				position = int(position)
+				if position > len(board.board)**2 or position < 1:
+					position = input("The chosen Position needs to be a number BETWEEN 1 and {}. Please choose a different Position\n".format(len(board.board)**2))
+					continue
 			except ValueError:
 				position = input("The chosen Position needs to be a NUMBER between 1 and {}. Please choose a different Position\n".format(len(board.board)**2))
 				continue
