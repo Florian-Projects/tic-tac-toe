@@ -42,6 +42,7 @@ class Board:
 			board.append([])
 			for x in range(width):
 				board[y].append(index)
+				index += 1
 
 		return board
 
