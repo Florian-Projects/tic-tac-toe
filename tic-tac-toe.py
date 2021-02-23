@@ -11,15 +11,7 @@ import numpy as np
 class Board:
 
 	def __init__(self, size=9):
-		self.board = [[1, 2, 3],
-					  [4, 5, 6],
-					  [7, 8, 9]]
-		if self.is_square(size):
-			self.board = self.create_board(size)
-		else:
-			self.board = [[1, 2, 3],
-						[4, 5, 6],
-						[7, 8, 9]]
+		self.board = self.create_board(size)
 
 	@staticmethod
 	def is_square(x):
@@ -134,10 +126,27 @@ class Player:
 
 	def make_move(self, board):
 		board.print_board()
-		position = int(input("{} choose a Position.\n".format(self.name)))
+		position = "a"
+		print(type(position))
+		while not type(position) == int:
+			try:
+				position = int(input("{} choose a Position.\n".format(self.name)))
+			except ValueError:
+				print("The chosen Position needs to be a number between 1 and {}".format(len(board.board)**2))
+		index = self.get_index_in_board(board.board, position)
+		while not index:
+			print()
+
+
+	@staticmethod
+	def get_index_in_board(board, position):
+		"""returns the index of an element in a 2d List. If the element is not found none is returned"""
 		for i, sublist in enumerate(board.board):
 			if position in sublist:
-				board.board[i][board.board[i].index(position)] = self.symbol
+				return i, board.index(position)
+
+
+
 
 playingfield = Board(25)
 player1 = Player("Florian", "X")
