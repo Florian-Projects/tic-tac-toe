@@ -144,3 +144,4 @@ player1 = Player("Florian", "X")
 player2 = Player("Kilian", "O")
 game = Game(playingfield, player1, player2)
 game.start_game()
+y
