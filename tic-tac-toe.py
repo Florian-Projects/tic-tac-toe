@@ -115,7 +115,8 @@ class Game:
 	def turn_player1(self):
 		self.player1.make_move(self.board)
 		if self.board.check_win_condition():
-			return "{} Wins".format(self.player1.name)
+			print("{} Wins".format(self.player1.name))
+			return
 
 		else:
 			return self.turn_player2()
@@ -123,7 +124,8 @@ class Game:
 	def turn_player2(self):
 		self.player2.make_move(self.board)
 		if self.board.check_win_condition():
-			return "{} Wins".format(self.player2.name)
+			print("{} Wins".format(self.player2.name))
+			return
 		else:
 			return self.turn_player1()
 
