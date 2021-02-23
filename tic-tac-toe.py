@@ -125,18 +125,10 @@ class Player:
 		self.symbol = symbol
 
 	def make_move(self, board):
+		# requirements:
+		# 1. chosen field needs to be a number between 1 and len(board.board)**2
+		# 2. Need to check if the chosen field is still available
 		board.print_board()
-		position = "a"
-		print(type(position))
-		while not type(position) == int:
-			try:
-				position = int(input("{} choose a Position.\n".format(self.name)))
-			except ValueError:
-				print("The chosen Position needs to be a number between 1 and {}".format(len(board.board)**2))
-		index = self.get_index_in_board(board.board, position)
-		while not index:
-			print()
-
 
 	@staticmethod
 	def get_index_in_board(board, position):
