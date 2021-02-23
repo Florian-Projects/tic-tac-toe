@@ -139,14 +139,6 @@ class Player:
 			if position in sublist:
 				board.board[i][board.board[i].index(position)] = self.symbol
 
-
-
-
-# x = [[1,2],[3,4]]
-# position = 4
-# for i, sublist in enumerate(x):
-# 	if position in sublist:
-# 		print(str(i) + ", " + str(x[i].index(position)))
 playingfield = Board(25)
 player1 = Player("Florian", "X")
 player2 = Player("Kilian", "O")
