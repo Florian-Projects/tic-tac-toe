@@ -1,11 +1,11 @@
 # TODO add checks for valid player symbols (2 players cannot use the same symbol,
 #  symbol needs to be a visible character and can't be a number)
+# TODO make a better print_board() method
 
 import numpy as np
 
 
 class Board:
-
 	def __init__(self, size=9):
 		self.board = self.create_board(size)
 
