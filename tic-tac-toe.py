@@ -19,8 +19,7 @@ class Board:
 			return False
 
 	def print_board(self):
-		for i in self.board:
-			print(str(i).replace(",", " "))
+		pass
 
 	@staticmethod
 	def create_board(size):
