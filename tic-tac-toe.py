@@ -1,7 +1,5 @@
 # TODO add checks for valid player symbols (2 players cannot use the same symbol,
 #  symbol needs to be a visible character and can't be a number)
-# TODO refactor comments
-# TODO change self parameters such that only the necessary information is given to the function instead of all
 # TODO improve Board.check_column() by using transposition check:
 #  https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions for more information
 
@@ -26,7 +24,8 @@ class Board:
 		for i in self.board:
 			print(str(i).replace(","," "))
 
-	def create_board(self, size):
+	@staticmethod
+	def create_board(size):
 		board = []
 		width, height = int(np.sqrt(size)), int(np.sqrt(size))
 		index = 1
@@ -38,33 +37,28 @@ class Board:
 
 		return board
 
-
 	def check_win_condition(self):
-		if self.check_rows() or self.check_columns() or self.check_diagonals():
+		if self.check_rows(self.board) or self.check_columns(self.board) or self.check_diagonals(self.board):
 			return True
 		else:
 			return False
 
-	def check_rows(self):
-		for i in range(len(self.board)):
-			if self.is_list_equal(self.board[i]):
+	def check_rows(self, matrix):
+		print("new call")
+		for i in range(len(matrix)):
+			print(matrix[i])
+			if self.is_list_equal(matrix[i]):
 				return True
 		return False
 
-	def check_columns(self):
-		column = []
-		for i in range(len(self.board)):
-			for j in range(len(self.board)):
-				column.append(self.board[j][i])
-			if self.is_list_equal(column):
-				return True
-			column = []
-		return False
+	def check_columns(self, matrix):
+		transposed = [[row[i] for row in self.board] for i in range(len(matrix))] #create transposed Matrix from board
+		self.check_rows(transposed)
 
-	def check_diagonals(self):
+	def check_diagonals(self, matrix):
 		diagonal = []
-		for i in range(len(self.board)):
-			diagonal.append(self.board[i][i])
+		for i in range(len(matrix)):
+			diagonal.append(matrix[i][i])
 		if self.is_list_equal(diagonal):
 			return True
 
@@ -79,7 +73,6 @@ class Board:
 	@staticmethod
 	def is_list_equal(x):
 		"""checks if all elemnts of a 1d Array are the same and returns a boolean"""
-
 		for i in range(len(x) - 1):
 			if x[i] == x[i + 1]:
 				continue
@@ -165,7 +158,7 @@ class Player:
 
 
 
-playingfield = Board(25)
+playingfield = Board(9)
 player1 = Player("Florian", "X")
 player2 = Player("Kilian", "O")
 game = Game(playingfield, player1, player2)
