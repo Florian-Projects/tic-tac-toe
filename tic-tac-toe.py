@@ -1,7 +1,5 @@
 # TODO add checks for valid player symbols (2 players cannot use the same symbol,
 #  symbol needs to be a visible character and can't be a number)
-# TODO improve Board.check_column() by using transposition check:
-#  https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions for more information
 
 import numpy as np
 
@@ -22,7 +20,7 @@ class Board:
 
 	def print_board(self):
 		for i in self.board:
-			print(str(i).replace(","," "))
+			print(str(i).replace(",", " "))
 
 	@staticmethod
 	def create_board(size):
@@ -50,7 +48,7 @@ class Board:
 		return False
 
 	def check_columns(self, matrix):
-		transposed = [[row[i] for row in self.board] for i in range(len(matrix))] #create transposed Matrix from board
+		transposed = [[row[i] for row in self.board] for i in range(len(matrix))]  # create transposed Matrix from board
 		return self.check_rows(transposed)
 
 	def check_diagonals(self, matrix):
@@ -142,7 +140,6 @@ class Player:
 				position = input("The chosen Position has already been taken. Please choose a different Position\n")
 		board.board[index[0]][index[1]] = self.symbol
 
-
 	@staticmethod
 	def get_index_in_board(board, position):
 		"""returns the index of an element in a 2d List. If the element is not found none is returned"""
@@ -152,8 +149,6 @@ class Player:
 					return i, sublist.index(position)
 				except ValueError:
 					return
-
-
 
 
 playingfield = Board(9)
