@@ -44,16 +44,14 @@ class Board:
 			return False
 
 	def check_rows(self, matrix):
-		print("new call")
 		for i in range(len(matrix)):
-			print(matrix[i])
 			if self.is_list_equal(matrix[i]):
 				return True
 		return False
 
 	def check_columns(self, matrix):
 		transposed = [[row[i] for row in self.board] for i in range(len(matrix))] #create transposed Matrix from board
-		self.check_rows(transposed)
+		return self.check_rows(transposed)
 
 	def check_diagonals(self, matrix):
 		diagonal = []
