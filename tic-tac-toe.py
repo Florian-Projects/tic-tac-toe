@@ -8,6 +8,7 @@ import numpy as np
 class Board:
 	def __init__(self, size=9):
 		self.board = self.create_board(size)
+		self.board_string = self.create_board_string(size)
 
 	@staticmethod
 	def is_square(x):
@@ -19,7 +20,9 @@ class Board:
 			return False
 
 	def print_board(self):
-		pass
+		#first create flattened list
+		flattened = [j for sub in self.board for j in sub]
+		print(self.board_string.format(*flattened))
 
 	@staticmethod
 	def create_board(size):
@@ -33,6 +36,23 @@ class Board:
 				index += 1
 
 		return board
+
+	@staticmethod
+	def create_board_string(size):
+		field = "{:^8}|" # creates centered string with a width of 8, when using .format()
+		end_field = "{:^8}"
+		string = """"""
+		root = int(np.sqrt(size))
+		bar = "{:-<"
+		bar = bar + str(8) + "}"
+		for y in range(root):
+			for x in range(root-1):
+				string = string + field
+			string = string + end_field + "\n" + (root - 1)*(bar.format("-") + "|") + bar.format("-") + "\n"
+		print(string)
+		return string
+
+
 
 	def check_win_condition(self):
 		if self.check_rows(self.board) or self.check_columns(self.board) or self.check_diagonals(self.board):
