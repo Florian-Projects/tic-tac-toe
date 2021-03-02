@@ -20,7 +20,6 @@ class Board:
 			return False
 
 	def print_board(self):
-		#first create flattened list
 		flattened = [j for sub in self.board for j in sub]
 		print(self.board_string.format(*flattened))
 
@@ -43,12 +42,11 @@ class Board:
 		end_field = "{:^8}"
 		string = """"""
 		root = int(np.sqrt(size))
-		bar = "{:-<"
-		bar = bar + str(8) + "}"
+		bar = "{:-<8}".format("-")
 		for y in range(root):
 			for x in range(root-1):
 				string = string + field
-			string = string + end_field + "\n" + (root - 1)*(bar.format("-") + "|") + bar.format("-") + "\n"
+			string = string + end_field + "\n" + (root - 1)*(bar + "|") + bar + "\n"
 		print(string)
 		return string
 
